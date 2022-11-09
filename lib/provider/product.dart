@@ -8,12 +8,16 @@ class Product with ChangeNotifier {
   final String description;
   final double price;
   final String imageurl;
-  bool isfavourite;
+  bool isfavorite;
   Product(
       {required this.id,
       required this.title,
       required this.description,
       required this.price,
       required this.imageurl,
-      this.isfavourite = false});
+      this.isfavorite = false});
+      void tooglefav(){
+        isfavorite=!isfavorite;
+        notifyListeners();  
+      }
 }

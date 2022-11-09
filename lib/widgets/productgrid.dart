@@ -5,10 +5,14 @@ import 'package:provider/provider.dart';
 import '../provider/product.dart';
 
 class Productsgrid extends StatelessWidget {
+  bool showfavs;
+
+  Productsgrid(this.showfavs);
   @override
   Widget build(BuildContext context) {
-    final productsdata = Provider.of<Products>(context);
-    final products = productsdata.items;
+    var productsdata = Provider.of<Products>(context);
+    
+    var products =showfavs? productsdata.favitems:productsdata.items;
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -16,15 +20,14 @@ class Productsgrid extends StatelessWidget {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),
-      itemBuilder: (ctx, i) => ChangeNotifierProvider(
-        create: (BuildContext c) => products[i],
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: productitem(
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+     value: products[i],
+        child:  productitem(
               /*  products[i].id, products[i].title, products[i].imageurl*/),
         ),
-      ),
-      itemCount: products.length,
-    );
+      
+      itemCount: products.length);
+    
   }
+  
 }
